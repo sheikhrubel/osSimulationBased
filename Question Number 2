@@ -1,0 +1,98 @@
+#include<stdio.h>
+ 
+int main()
+{
+	/*  
+		Declaring all necessery variable for the program
+		Complexity is 1 Unit of time for each variable............
+		*///----------------------------------------------------------
+    int burst_time[50];
+	int waiting_time[50];
+	int turn_around_time[50];
+	int avg_waiting_time = 0;
+	int avg_turn_around_time = 0;
+	int n,i,j;
+
+	/*Input from user (Number of process)
+	-----------------------------------------*/
+    printf("Total Number of Process :");
+    scanf("%d",&n);
+
+ 	/*Input from user (Burst Time per Process)
+	-----------------------------------------*/
+    printf("\nBurst Time\n");
+    for(i=0;i<n;i++) //Complexity O(n)
+    {
+        printf("Process %d:",i+1);
+        scanf("%d",&burst_time[i]);
+    }
+
+ 	/*Initially Waiting time is zero)
+	-----------------------------------------*/
+    waiting_time[0]=0;  
+ 
+    /*Calculating waiting time by adding waiting time and burst time.
+	-----------------------------------------*/
+    for(i=1;i<n;i++) //Complexity O(n)
+    {
+        waiting_time[i]=0;
+        for(j=0;j<i;j++)//Complexity O(n)
+            waiting_time[i]+=burst_time[j];
+	
+    }
+ 	printf("\nProcess\t\t\tBurst Time\tWaiting Time\tTurnaround Time");
+ 
+	
+	/*Calculating the turnaround time for all the process.
+	-----------------------------------------*/    
+    for(i=0;i<n;i++) //Complexity O(n)
+    {
+        turn_around_time[i]=burst_time[i]+waiting_time[i];
+        avg_waiting_time= avg_waiting_time+waiting_time[i];
+        avg_turn_around_time= avg_turn_around_time+turn_around_time[i];
+		printf("\n-----------\t\t----------\t----------\t--------------");
+        printf("\nProcess(%d)\t\t%d\t\t%d\t\t%d",i+1,burst_time[i],waiting_time[i],turn_around_time[i]);
+    }
+	printf("\n-----------\t\t----------\t----------\t--------------");
+ 
+
+	/*Calculating Average Waiting time
+	-----------------------------------------*/
+    avg_waiting_time/=i;
+	printf("\n\nAvg Waiting Time: %d ",avg_waiting_time);
+
+	
+
+	/*Calculating Average Turn Around time
+	-----------------------------------------*/
+    avg_turn_around_time/=i;
+    printf("\nAvg Turnaround Time: %d\n",avg_turn_around_time);
+ 
+    return 0;
+}
+
+
+// Total Complexity is : O(n^2)
+
+
+// Output: /*
+Total Number of Process :3
+
+Burst Time
+Process 1:10
+Process 2:8
+Process 3:2
+
+Process			Burst Time	Waiting Time	Turnaround Time
+-----------		----------	----------	--------------
+Process(1)		10		0		10
+-----------		----------	----------	--------------
+Process(2)		8		10		18
+-----------		----------	----------	--------------
+Process(3)		2		18		20
+-----------		----------	----------	--------------
+
+Avg Waiting Time: 9 
+Avg Turnaround Time: 16
+
+*/
